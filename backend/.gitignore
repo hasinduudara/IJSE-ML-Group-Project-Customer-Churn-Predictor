@@ -1,0 +1,20 @@
+# Python cache files (Auto-generated when Python runs)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments (Contains local installed packages)
+venv/
+env/
+.venv/
+
+# Environment variables (Keeps your secrets and passwords safe)
+.env
+
+# IDE / Editor configuration files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,23 @@
+# Use Python 3.14 slim image for a lightweight container
+FROM python:3.14-slim
+
+# Set the working directory inside the container
+WORKDIR /workspace
+
+# Copy the requirements file and install dependencies
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the backend code and the machine learning models
+# This ensures the relative path '../ml/models/' works perfectly
+COPY backend/ ./backend/
+COPY ml/models/ ./ml/models/
+
+# Move into the backend directory to run the application
+WORKDIR /workspace/backend
+
+# Set the default port for Google Cloud Run
+ENV PORT=8000
+
+# Start the FastAPI server using uvicorn
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]

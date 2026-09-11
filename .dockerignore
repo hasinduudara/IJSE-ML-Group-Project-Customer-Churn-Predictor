@@ -1,0 +1,17 @@
+# Ignore node modules and Python cache
+**/node_modules/
+**/__pycache__/
+
+# Ignore virtual environments
+.venv/
+venv/
+env/
+
+# Ignore Git files and environment variables
+.git/
+.env
+
+# Ignore Jupyter notebooks and datasets (only models are needed)
+ml/notebooks/
+ml/data/
+*.ipynb

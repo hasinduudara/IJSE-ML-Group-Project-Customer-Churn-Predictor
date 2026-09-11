@@ -74,6 +74,8 @@ The platform ships as a full monorepo: a trained **Random Forest** model, a **Fa
 
 > 🔗 **Try it now:** [https://churn-frontend-985106010559.us-central1.run.app](https://churn-frontend-985106010559.us-central1.run.app)
 
+<img width="1917" height="909" alt="image" src="https://github.com/user-attachments/assets/a89ff4e9-d17c-4302-a74f-1e33e030bdac" />
+
 <br/>
 
 ## ✨ Key Features

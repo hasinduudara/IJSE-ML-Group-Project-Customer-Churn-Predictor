@@ -51,22 +51,30 @@ def predict_churn(data_dict):
         else:
             shap_impact = shap_values[0, :, 1]
             
-        # Select the mapping dictionary and top indices based on the prediction
+        # Select the mapping dictionary and full ranked index order based on the prediction
         if is_churn:
-            # Top positive SHAP values (Pushing towards Churn)
-            top_indices = np.argsort(shap_impact)[-3:][::-1]
+            # All indices ranked by positive SHAP values (Pushing towards Churn), highest first
+            ranked_indices = np.argsort(shap_impact)[::-1]
             mapping_dict = CHURN_REASONS
         else:
-            # Top negative SHAP values (Pushing towards Stay)
-            top_indices = np.argsort(shap_impact)[:3]
+            # All indices ranked by negative SHAP values (Pushing towards Stay), lowest first
+            ranked_indices = np.argsort(shap_impact)
             mapping_dict = STAY_REASONS
-            
-        # Get descriptive reasons for the top features
+
+        # Get descriptive reasons for the top features, skipping ones that map to
+        # a reason text we've already shown (e.g. "tenure" and "TenureInYears" are
+        # collinear and would otherwise both surface the same displayed reason)
         top_reasons = []
-        for idx in top_indices:
+        seen_reasons = set()
+        for idx in ranked_indices:
+            if len(top_reasons) >= 3:
+                break
             raw_feature = expected_features[idx]
             # Use the specific reason, or default to the raw feature name if not mapped
             readable_name = mapping_dict.get(raw_feature, raw_feature)
+            if readable_name in seen_reasons:
+                continue
+            seen_reasons.add(readable_name)
             top_reasons.append(readable_name)
             
         return {

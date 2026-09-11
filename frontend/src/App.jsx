@@ -16,7 +16,7 @@ export default function App() {
 
   // State to store the prediction result from the backend
   const [result, setResult] = useState(null)
-  
+
   // State to show loading status while waiting for the API
   const [isLoading, setIsLoading] = useState(false)
 
@@ -85,23 +85,23 @@ export default function App() {
   async function handleSubmit(e) {
     e.preventDefault()
     setIsLoading(true)
-    
+
     // Convert string inputs to decimal numbers for the ML model
     const submitData = {}
     Object.keys(formData).forEach(key => {
       submitData[key] = parseFloat(formData[key])
     })
-    
+
     try {
       // Send a POST request to the FastAPI server
-      const response = await fetch("http://127.0.0.1:8000/predict", {
+      const response = await fetch("https://churn-backend-985106010559.us-central1.run.app/predict", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(submitData)
       })
-      
+
       // Save the result from the API
       const data = await response.json()
       setResult(data)
@@ -114,12 +114,12 @@ export default function App() {
   }
 
   return (
-    // Main container designed to fill the screen without scrolling (h-screen, overflow-hidden)
-    <div className="h-screen bg-gray-100 flex items-center justify-center p-4 overflow-hidden">
-      
-      {/* Main card with a two-column grid layout */}
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 h-full max-h-[90vh]">
-        
+    // Main container allows scrolling on small screens by using min-h-screen
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+
+      {/* Main card allows natural height expansion */}
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8">
+
         {/* LEFT COLUMN: Data Input Form */}
         <div className="flex flex-col h-full justify-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center md:text-left">
@@ -129,21 +129,22 @@ export default function App() {
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
             {/* Loop through the array to generate form fields dynamically */}
             {formFields.map((field) => (
-              <div key={field.key} className="flex flex-col relative z-20">
-                <div className="flex items-center mb-1">
-                  
+              // Add h-full to the wrapper so all grid cells in a row have equal height
+              <div key={field.key} className="flex flex-col h-full relative z-20">
+                <div className="flex items-start mb-1">
+
                   {/* Bilingual Label with smaller text to save space */}
                   <label className="text-[11px] font-semibold text-gray-700 leading-tight">
                     {field.label}
                   </label>
-                  
+
                   {/* Tooltip Icon and Text Wrapper */}
                   <div className="relative group ml-1 flex items-center cursor-pointer">
                     {/* SVG Info Icon */}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 text-blue-500 hover:text-blue-700">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                     </svg>
-                    
+
                     {/* Hidden text box that appears on mouse hover */}
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 hidden group-hover:block w-56 p-2 bg-gray-800 text-white text-[10px] rounded shadow-xl z-50 pointer-events-none">
                       {field.tooltip}
@@ -160,7 +161,8 @@ export default function App() {
                   onChange={handleChange}
                   placeholder={field.placeholder}
                   required
-                  className="border border-gray-300 rounded p-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+                  // Add mt-auto to push the input field to the very bottom of the cell
+                  className="border border-gray-300 rounded p-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 mt-auto"
                 />
               </div>
             ))}
@@ -195,7 +197,7 @@ export default function App() {
                 Prediction Result <br/>
                 <span className="text-sm font-normal text-gray-600">(පුරෝකථන ප්‍රතිඵලය)</span>
               </h2>
-              
+
               <div className={`p-4 rounded-lg font-bold text-lg text-center mb-6 shadow-sm ${
                 result.status === 'error' ? 'bg-red-100 text-red-700' :
                 result.prediction ? 'bg-orange-100 text-orange-700 border border-orange-300' : 'bg-green-100 text-green-700 border border-green-300'
@@ -234,7 +236,7 @@ export default function App() {
             </div>
           )}
         </div>
-        
+
       </div>
     </div>
   )

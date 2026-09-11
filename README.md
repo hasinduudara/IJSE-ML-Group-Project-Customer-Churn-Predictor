@@ -20,6 +20,8 @@ An intelligent, full-stack churn prediction platform powered by **Machine Learni
 [![Issues](https://img.shields.io/github/issues/hasinduudara/IJSE-ML-Group-Project-Customer-Churn-Predictor?style=flat-square)](../../issues)
 [![Last Commit](https://img.shields.io/github/last-commit/hasinduudara/IJSE-ML-Group-Project-Customer-Churn-Predictor?style=flat-square)](../../commits/main)
 
+### 🌐 [**Live Demo →** churn-frontend-985106010559.us-central1.run.app](https://churn-frontend-985106010559.us-central1.run.app)
+
 <br/>
 
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" width="46" height="46"/>&nbsp;&nbsp;
@@ -38,6 +40,7 @@ An intelligent, full-stack churn prediction platform powered by **Machine Learni
 
 - [🚀 Customer Churn Predictor](#-customer-churn-predictor)
     - [Enterprise-Grade ML System for Predicting \& Explaining Customer Churn](#enterprise-grade-ml-system-for-predicting--explaining-customer-churn)
+    - [🌐 **Live Demo →** churn-frontend-985106010559.us-central1.run.app](#-live-demo--churn-frontend-985106010559us-central1runapp)
   - [📖 Table of Contents](#-table-of-contents)
   - [🎯 Overview](#-overview)
   - [✨ Key Features](#-key-features)
@@ -67,7 +70,9 @@ An intelligent, full-stack churn prediction platform powered by **Machine Learni
 
 **Customer Churn Predictor** is a machine learning system that predicts whether a customer is likely to churn (leave a service) or stay, and — critically — **explains why**. Instead of a black-box prediction, the system uses **SHAP (SHapley Additive exPlanations)** to break down exactly which features drove each prediction, making it usable for real business decision-making.
 
-The platform ships as a full monorepo: a trained **Random Forest** model, a **FastAPI** backend serving predictions, and a **React + Vite** frontend with a clean, no-scroll, bilingual (🇬🇧 English / 🇱🇰 Sinhala) UI — all containerized and ready for **Google Cloud Run**.
+The platform ships as a full monorepo: a trained **Random Forest** model, a **FastAPI** backend serving predictions, and a **React + Vite** frontend with a clean, no-scroll, bilingual (🇬🇧 English / 🇱🇰 Sinhala) UI — all containerized and deployed live on **Google Cloud Run**.
+
+> 🔗 **Try it now:** [https://churn-frontend-985106010559.us-central1.run.app](https://churn-frontend-985106010559.us-central1.run.app)
 
 <br/>
 
@@ -81,7 +86,7 @@ The platform ships as a full monorepo: a trained **Random Forest** model, a **Fa
 | 📱 **Responsive Design** | No-scroll, mobile-friendly layout built with Tailwind CSS |
 | ⚡ **Fast API Layer** | High-performance REST API built with FastAPI + Uvicorn |
 | 🐳 **Containerized** | Dockerfiles for both frontend and backend, ready for cloud deployment |
-| ☁️ **Cloud-Native** | Deployable out-of-the-box to Google Cloud Platform (Cloud Run) |
+| ☁️ **Cloud-Native** | Live and deployed on Google Cloud Platform (Cloud Run) |
 | 📊 **Data Pipeline** | Full ML pipeline from raw data → preprocessing → training → evaluation |
 
 <br/>
@@ -128,8 +133,8 @@ The platform ships as a full monorepo: a trained **Random Forest** model, a **Fa
 
 ```mermaid
 flowchart LR
-    A[👤 User] -->|Enters customer data| B[React Frontend<br/>Vite + Tailwind]
-    B -->|REST API call| C[FastAPI Backend]
+    A[👤 User] -->|Enters customer data| B[React Frontend<br/>Vite + Tailwind<br/>Cloud Run]
+    B -->|REST API call| C[FastAPI Backend<br/>Cloud Run]
     C -->|Loads| D[(rf_model.pkl<br/>scaler.pkl)]
     C -->|Generates| E[SHAP Explainer]
     D --> F{Prediction:<br/>Churn / Stay}
@@ -304,7 +309,7 @@ gcloud run deploy churn-backend \
   --source . \
   --dockerfile Dockerfile.backend \
   --platform managed \
-  --region asia-south1 \
+  --region us-central1 \
   --allow-unauthenticated
 
 # Frontend
@@ -312,15 +317,21 @@ gcloud run deploy churn-frontend \
   --source . \
   --dockerfile Dockerfile.frontend \
   --platform managed \
-  --region asia-south1 \
+  --region us-central1 \
   --allow-unauthenticated
 ```
+
+**Live services:**
+
+| Service | URL |
+|---|---|
+| 🌐 Frontend | [churn-frontend-985106010559.us-central1.run.app](https://churn-frontend-985106010559.us-central1.run.app) |
 
 <br/>
 
 ## 🖼️ Screenshots
 
-> _Add screenshots or a demo GIF here once available — e.g. `docs/screenshot-dashboard.png`_
+> _Add screenshots or a demo GIF here once available — e.g. `docs/screenshot-dashboard.png`, or visit the [live demo](https://churn-frontend-985106010559.us-central1.run.app) directly_
 
 <div align="center">
 
@@ -378,5 +389,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](./LICEN
 <div align="center">
 
 Made with ❤️ by the Customer Churn Predictor Team
+
+🌐 **[Live Demo](https://churn-frontend-985106010559.us-central1.run.app)**
 
 </div>
